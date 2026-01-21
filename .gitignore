@@ -1,0 +1,29 @@
+# Build output
+bin/
+obj/
+publish-small/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+
+# IDEs
+.idea/
+.vscode/
+*.sln.iml
+
+# System files
+Thumbs.db
+Desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+
+# Temporary files
+*.tmp
+*.log
+*~
+
+# Local configuration
+.claude/

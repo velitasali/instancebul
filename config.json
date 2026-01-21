@@ -1,0 +1,24 @@
+{
+  "Shortcuts": [
+    {
+      "Hotkey": "Alt+F9",
+      "ProcessName": "Code",
+      "LaunchPath": "C:\\Program Files\\Microsoft VS Code\\Code.exe"
+    },
+    {
+      "Hotkey": "Alt+F10",
+      "ProcessName": "chrome",
+      "LaunchPath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    },
+    {
+      "Hotkey": "Alt+F11",
+      "ProcessName": "AppleMusic",
+      "LaunchPath": "finduwp:AppleMusic"
+    },
+    {
+      "Hotkey": "Ctrl+Alt+T",
+      "ProcessName": "WindowsTerminal",
+      "LaunchPath": "finduwp:WindowsTerminal"
+    }
+  ]
+}
