@@ -32,7 +32,8 @@ The app comes pre-configured with these shortcuts:
 |--------|-----|-------------|
 | `Alt+F9` | VS Code | Microsoft Visual Studio Code |
 | `Alt+F10` | Chrome | Google Chrome browser |
-| `Alt+F11` | Apple Music | Apple Music app |
+| `Alt+F11` | Android Studio | Android Studio IDE |
+| `Alt+F12` | Apple Music | Apple Music app |
 | `Ctrl+Alt+T` | Windows Terminal | Modern Windows Terminal |
 
 ## Configuration
@@ -45,7 +46,7 @@ Edit `config.json` to customize your shortcuts:
     {
       "Hotkey": "Alt+F9",
       "ProcessName": "Code",
-      "LaunchPath": "C:\\Program Files\\Microsoft VS Code\\Code.exe"
+      "LaunchPath": "path:Code"
     },
     {
       "Hotkey": "Ctrl+Alt+T",
@@ -176,9 +177,9 @@ Simply use `finduwp:` followed by the app name:
 ```
 
 **How it works:**
-- Automatically finds the UWP app's executable path
+- Automatically resolves the UWP app's AUMID and launches via `shell:AppsFolder` URI
 - First launch: Searches installed apps and caches the result
-- Subsequent launches: Uses cached path (instant)
+- Subsequent launches: Uses cached result (instant)
 - Works with both new and updated app versions
 
 **Tips:**
@@ -207,7 +208,7 @@ Just use these simple formats - no need to find complex paths!
 
 ### Note on UWP App Updates
 
-When UWP apps update, their version numbers change in the installation path. The `finduwp:` feature handles this automatically by always finding the current executable location, so you never need to update your config when apps are updated.
+When UWP apps update, their version numbers change in the installation path. The `finduwp:` feature handles this automatically — it resolves apps by AUMID via `shell:AppsFolder`, not by direct exe path, so updates never break your shortcuts.
 
 ## Apps in PATH Environment Variable
 
