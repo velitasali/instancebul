@@ -176,26 +176,15 @@ static class WindowManager
                 }
             }
 
-            // Support ms-* protocols (for Windows settings, etc.)
-            if (path.StartsWith("ms-", StringComparison.OrdinalIgnoreCase))
+            // shell:AppsFolder\{AUMID} and ms-* protocols are routed by the OS shell
+            if (path.StartsWith("shell:", StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith("ms-", StringComparison.OrdinalIgnoreCase))
             {
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = path,
                     UseShellExecute = true
                 });
-                return;
-            }
-
-            // Regular file path
-            if (!File.Exists(path))
-            {
-                MessageBox.Show(
-                    $"Application not found:\n{path}",
-                    "Instancebul",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
                 return;
             }
 

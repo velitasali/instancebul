@@ -18,24 +18,25 @@ static class UwpAppFinder
 
         try
         {
-            // Use PowerShell to find UWP apps and return the actual executable path
+            // Use PowerShell to find UWP apps and return a shell:AppsFolder URI.
+            // Launching via AUMID is the correct approach — directly executing the exe
+            // inside WindowsApps\ requires TrustedInstaller access and breaks on updates.
             var script = $@"
                 Get-AppxPackage | Where-Object {{
                     $_.Name -like '*{searchTerm}*' -and $_.IsFramework -eq $false
                 }} | Select-Object -First 1 | ForEach-Object {{
+                    $pfn = $_.PackageFamilyName
                     $manifestPath = Join-Path $_.InstallLocation 'AppxManifest.xml'
                     if (Test-Path $manifestPath) {{
                         [xml]$manifest = Get-Content $manifestPath
                         $applications = $manifest.Package.Applications.Application
-                        # Handle both single and multiple applications
                         if ($applications -is [System.Array]) {{
-                            $executable = $applications[0].Executable
+                            $appId = $applications[0].Id
                         }} else {{
-                            $executable = $applications.Executable
+                            $appId = $applications.Id
                         }}
-                        if ($executable) {{
-                            $exePath = Join-Path $_.InstallLocation $executable
-                            Write-Output $exePath
+                        if ($appId) {{
+                            Write-Output ""shell:AppsFolder\$pfn!$appId""
                         }}
                     }}
                 }}
@@ -63,12 +64,11 @@ static class UwpAppFinder
                 return null;
             }
 
-            var exePath = output.Trim();
+            var result = output.Trim();
 
-            // Cache the result
-            _cache[cacheKey] = exePath;
+            _cache[cacheKey] = result;
 
-            return exePath;
+            return result;
         }
         catch
         {
