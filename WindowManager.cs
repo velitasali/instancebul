@@ -145,7 +145,7 @@ static class WindowManager
                     appName += ".exe";
                 }
 
-                // Search in PATH
+                // Search in PATH for .exe or .cmd
                 var pathVar = Environment.GetEnvironmentVariable("PATH");
                 if (pathVar != null)
                 {
@@ -158,6 +158,14 @@ static class WindowManager
                         if (File.Exists(fullPath))
                         {
                             path = fullPath;
+                            break;
+                        }
+
+                        // Also check for .cmd wrapper (e.g. VS Code installs code.cmd)
+                        var cmdPath = Path.Combine(dir.Trim(), Path.GetFileNameWithoutExtension(appName) + ".cmd");
+                        if (File.Exists(cmdPath))
+                        {
+                            path = Path.GetFileNameWithoutExtension(appName);
                             break;
                         }
                     }
